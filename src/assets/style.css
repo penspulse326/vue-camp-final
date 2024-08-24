@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: 'Noto Sans TC', sans-serif;
+  }
+}
+
+@layer components {
+  .center {
+    @apply flex items-center justify-center;
+  }
+
+  .btn {
+    @apply px-2 py-1 rounded-md bg-secondary text-white duration-100 hover:opacity-90;
+  }
+
+  .form-input {
+    @apply px-2 py-1 border border-secondary outline-none rounded-md duration-100 focus:outline-secondary;
+  }
+}

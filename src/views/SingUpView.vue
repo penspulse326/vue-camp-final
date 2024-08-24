@@ -16,13 +16,21 @@ import LogoLink from '@/components/LogoLink.vue';
             <input type="text" class="form-input w-full" />
           </div>
           <div class="space-y-2 w-full">
+            <h2>暱稱</h2>
+            <input type="password" class="form-input w-full" />
+          </div>
+          <div class="space-y-2 w-full">
             <h2>密碼</h2>
             <input type="password" class="form-input w-full" />
           </div>
-          <button type="button" class="btn w-full">登入</button>
+          <div class="space-y-2 w-full">
+            <h2>確認密碼</h2>
+            <input type="password" class="form-input w-full" />
+          </div>
+          <button type="button" class="btn w-full">註冊</button>
         </form>
-        <RouterLink to="signup" class="mt-8 text-secondary underline hover:font-bold"
-          >沒有帳號嗎？點此註冊</RouterLink
+        <RouterLink to="/" class="mt-8 text-secondary underline hover:font-bold"
+          >已經有帳號了嗎？點此登入</RouterLink
         >
       </section>
     </div>
