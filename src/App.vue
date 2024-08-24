@@ -11,8 +11,8 @@ import TodoView from '@/views/TodoView.vue';
     </nav> -->
   </header>
 
-  <RouterView />
-  <!-- <TodoView /> -->
+  <!-- <RouterView /> -->
+  <TodoView />
 </template>
 
 <style scoped></style>
