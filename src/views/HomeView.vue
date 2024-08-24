@@ -4,7 +4,7 @@ import LogoLink from '@/components/LogoLink.vue';
 </script>
 
 <template>
-  <main class="center h-[100dvh] bg-gradient-to-b from-primary to-secondary">
+  <main class="center h-[100dvh] bg-gradient-to-b from-secondary to-primary">
     <div class="container mx-auto">
       <LogoLink />
       <section
@@ -21,7 +21,7 @@ import LogoLink from '@/components/LogoLink.vue';
           </div>
           <button type="button" class="btn w-full">登入</button>
         </form>
-        <RouterLink to="signup" class="mt-8 text-secondary underline hover:font-bold"
+        <RouterLink to="signup" class="mt-8 text-primary underline hover:font-bold"
           >沒有帳號嗎？點此註冊</RouterLink
         >
       </section>

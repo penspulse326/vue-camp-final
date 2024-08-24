@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import { RouterLink } from 'vue-router';
 import LogoLink from '@/components/LogoLink.vue';
 import TodoInput from '@/components/TodoInput.vue';
 import TodoContent from '@/components/TodoContent.vue';
 </script>
 
 <template>
-  <main class="center h-[100dvh] bg-gradient-to-b from-primary to-secondary">
+  <main class="center h-[100dvh] bg-gradient-to-b from-secondary to-primary">
     <nav class="fixed top-0 flex justify-between items-center gap-4 px-4 py-2 w-full">
       <LogoLink />
       <div class="flex gap-4 text-lg text-gray-900 font-bold">

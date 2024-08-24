@@ -16,10 +16,10 @@
   }
 
   .btn {
-    @apply px-2 py-1 rounded-md bg-secondary text-white duration-100 hover:opacity-90;
+    @apply px-2 py-1 rounded-md bg-primary text-white duration-100 hover:opacity-90;
   }
 
   .form-input {
-    @apply px-2 py-1 border border-secondary outline-none rounded-md duration-100 focus:outline-secondary;
+    @apply px-2 py-1 border border-primary outline-none rounded-md duration-100 focus:outline-secondary;
   }
 }

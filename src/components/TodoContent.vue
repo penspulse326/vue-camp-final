@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { TabGroup, TabList, Tab, TabPanels, TabPanel } from '@headlessui/vue';
+import CheckBox from './CheckBox.vue';
 
 const categories = ref({
   全部: [
@@ -57,7 +58,7 @@ const categories = ref({
 <template>
   <div>
     <TabGroup>
-      <TabList class="flex space-x-1 rounded-xl bg-secondary/50 p-1">
+      <TabList class="flex space-x-1 rounded-xl bg-primary/50 p-1">
         <Tab
           v-for="category in Object.keys(categories)"
           as="template"
@@ -69,7 +70,7 @@ const categories = ref({
               'w-full rounded-lg py-2.5 text-sm font-medium leading-5',
               'ring-white/60 ring-offset-2 ring-offset-primary focus:outline-none focus:ring-2',
               selected
-                ? 'bg-white text-secondary shadow'
+                ? 'bg-white text-primary shadow'
                 : 'text-blue-100 hover:bg-white/[0.12] hover:text-white'
             ]"
           >
@@ -94,7 +95,7 @@ const categories = ref({
               class="flex justify-between items-center rounded-md p-3 hover:bg-gray-100"
             >
               <div class="flex items-center gap-4">
-                <input type="checkbox" class="w-4 h-4" />
+                <CheckBox />
                 <span class="inline-block max-w-[200px] md:max-w-[300px] truncate">{{
                   post.title
                 }}</span>
