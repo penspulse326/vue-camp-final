@@ -12,6 +12,5 @@ const app = createApp(App);
 app.use(createPinia());
 app.use(router);
 
-app.component('LogoLink', LogoLink);
-
 app.mount('#app');
+app.component('LogoLink', LogoLink);
