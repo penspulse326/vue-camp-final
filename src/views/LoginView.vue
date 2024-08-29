@@ -4,10 +4,7 @@ import LogoLink from '@/components/LogoLink.vue';
 </script>
 
 <template>
-  <main class="center h-[100dvh] bg-gradient-to-b from-secondary to-primary">
-    <div class="container mx-auto">
-      <LogoLink />
-      <section
+   <section
         class="center flex-col mt-4 mx-auto px-4 py-12 max-w-[420px] rounded-lg shadow-md bg-white"
       >
         <form action="" class="center flex-col gap-4 min-w-[280px]">
@@ -25,6 +22,4 @@ import LogoLink from '@/components/LogoLink.vue';
           >沒有帳號嗎？點此註冊</RouterLink
         >
       </section>
-    </div>
-  </main>
 </template>
