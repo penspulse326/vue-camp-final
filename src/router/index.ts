@@ -1,6 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
-import HomeView from '../views/HomeView.vue';
+import LoginView from '../views/LoginView.vue';
 import SingUpView from '@/views/SingUpView.vue';
+import TodoView from '@/views/TodoView.vue';
 
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
@@ -8,8 +9,9 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView
+      component: TodoView
     },
+    { path: 'login', name: 'login', component: LoginView },
     {
       path: '/signup',
       name: 'signup',
