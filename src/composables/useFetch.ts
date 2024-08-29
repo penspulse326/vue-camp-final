@@ -1,9 +1,10 @@
 import { ref } from 'vue';
 import { api } from '@/api';
+import type { Method } from 'axios';
 
 export function useFetch(
   url: string,
-  method: 'get' | 'post' | 'put' | 'delete' | 'patch',
+  method: Method,
   body?: any
 ) {
   const data = ref<any>(null);
