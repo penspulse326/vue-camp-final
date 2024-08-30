@@ -2,6 +2,10 @@
 import LogoLink from '@/components/LogoLink.vue';
 import TodoInput from '@/components/TodoInput.vue';
 import TodoContent from '@/components/TodoContent.vue';
+import { api } from '@/api';
+import { RouterLink } from 'vue-router';
+
+console.log(api.defaults.headers.common['Authorization']);
 </script>
 
 <template>
@@ -10,7 +14,7 @@ import TodoContent from '@/components/TodoContent.vue';
       <LogoLink />
       <div class="flex gap-4 text-lg text-gray-900 font-bold">
         <span>sss111</span>
-        <button type="button" class="underline duration-100 hover:scale-105">登出</button>
+        <RouterLink to="/login" class="underline duration-100 hover:scale-105">登出</RouterLink>
       </div>
     </nav>
     <div class="container mx-auto">
