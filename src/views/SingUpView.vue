@@ -4,9 +4,9 @@ import { RouterLink } from 'vue-router';
 
 <template>
   <section
-    class="center flex-col mt-4 mx-auto px-4 py-12 max-w-[420px] rounded-lg shadow-md bg-white"
+    class="f-center flex-col mt-4 mx-auto px-4 py-12 max-w-[420px] rounded-lg shadow-md bg-white"
   >
-    <form action="" class="center flex-col gap-4 min-w-[280px]">
+    <form action="" class="f-center flex-col gap-4 min-w-[280px]">
       <div class="space-y-2 w-full">
         <h2>電子郵件</h2>
         <input type="text" class="form-input w-full" />

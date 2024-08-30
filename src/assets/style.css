@@ -11,7 +11,7 @@
 }
 
 @layer components {
-  .center {
+  .f-center {
     @apply flex items-center justify-center;
   }
 
