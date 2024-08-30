@@ -2,12 +2,36 @@
 import LogoLink from '@/components/LogoLink.vue';
 import TodoInput from '@/components/TodoInput.vue';
 import TodoContent from '@/components/TodoContent.vue';
-import { api } from '@/api';
+import MessageModal from '@/components/MessageModal.vue';
 import { RouterLink } from 'vue-router';
 import { useUserStore } from '@/stores/user';
+import { useFetch } from '@/composables/useFetch';
+import { onMounted, ref, watch } from 'vue';
+import { API_TODO } from '@/api/endpoints';
 
-console.log(api.defaults.headers.common['Authorization']);
-const { nickname } = useUserStore();
+const isModalOpened = ref(false);
+
+const { nickname, setTodos } = useUserStore();
+const { data, error, isLoading, refetch } = useFetch();
+
+const handleAddTodo = (todo: string) => {
+  if(!todo) {
+    isModalOpened.value = true;
+    return;
+  };
+}
+
+const handleCloseModal = () => {
+  isModalOpened.value = false;
+}
+
+onMounted(async () => {
+  await refetch(() => API_TODO._GET_ALL());
+
+  if(data.value) {
+    setTodos(data.value.data);
+  }
+})
 </script>
 
 <template>
@@ -22,10 +46,11 @@ const { nickname } = useUserStore();
     <div class="container mx-auto">
       <div class="m-3">
         <div class="mx-auto space-y-8 max-w-[420px]">
-          <TodoInput />
+          <TodoInput @add-todo="handleAddTodo" />
           <TodoContent />
         </div>
       </div>
     </div>
   </main>
+  <MessageModal :isOpen="isModalOpened" @close="handleCloseModal"/>
 </template>

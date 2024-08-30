@@ -2,7 +2,7 @@ import { ref } from 'vue';
 
 export function useFetch() {
   const data = ref<any>(null);
-  const error = ref<any>(false);
+  const error = ref<any>(null);
   const isLoading = ref(false);
 
   const refetch = async (callback: () => Promise<any>) => {

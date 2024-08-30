@@ -6,8 +6,9 @@ import { api } from '@/api';
 import { API_USER } from '@/api/endpoints';
 import InputRequireStar from '@/components/InputRequireStar.vue';
 import { useUserStore } from '@/stores/user';
+import type { LoginForm } from '@/constants/types';
 
-const formData = ref({
+const formData = ref<LoginForm>({
   email: '',
   password: ''
 });
@@ -35,7 +36,7 @@ async function handleSubmit() {
 
 watch(data, () => {
   if (data.value) {
-    api.defaults.headers.common['Authorization'] = `Bearer ${data.value.token}`;
+    api.defaults.headers.common['Authorization'] = data.value.token;
     localStorage.setItem('token', data.value.token);
     setNickname(data.value.nickname);
     router.push({ name: 'home' });

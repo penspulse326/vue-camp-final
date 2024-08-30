@@ -2,10 +2,11 @@
 import { API_USER } from '@/api/endpoints';
 import InputRequireStar from '@/components/InputRequireStar.vue';
 import { useFetch } from '@/composables/useFetch';
+import type { SignupForm } from '@/constants/types';
 import { ref, watch } from 'vue';
 import { RouterLink, useRouter } from 'vue-router';
 
-const formData = ref({
+const formData = ref<SignupForm>({
   email: '',
   nickname: '',
   password: ''
