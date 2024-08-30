@@ -4,8 +4,10 @@ import TodoInput from '@/components/TodoInput.vue';
 import TodoContent from '@/components/TodoContent.vue';
 import { api } from '@/api';
 import { RouterLink } from 'vue-router';
+import { useUserStore } from '@/stores/user';
 
 console.log(api.defaults.headers.common['Authorization']);
+const { nickname } = useUserStore();
 </script>
 
 <template>
@@ -13,7 +15,7 @@ console.log(api.defaults.headers.common['Authorization']);
     <nav class="fixed top-0 flex justify-between items-center gap-4 px-4 py-2 w-full">
       <LogoLink />
       <div class="flex gap-4 text-lg text-gray-900 font-bold">
-        <span>sss111</span>
+        <span>{{ nickname }}</span>
         <RouterLink to="/login" class="underline duration-100 hover:scale-105">登出</RouterLink>
       </div>
     </nav>

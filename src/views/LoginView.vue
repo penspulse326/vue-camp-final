@@ -3,38 +3,41 @@ import { RouterLink, useRouter } from 'vue-router';
 import { ref, watch } from 'vue';
 import { useFetch } from '@/composables/useFetch';
 import { api } from '@/api';
-import { API_AUTH } from '@/api/path';
+import { API_USER } from '@/api/endpoints';
 import InputRequireStar from '@/components/InputRequireStar.vue';
+import { useUserStore } from '@/stores/user';
 
 const formData = ref({
   email: '',
   password: ''
 });
 
-const errorMessage = ref<String[]>([]);
+const errorMessage = ref('');
 
 const { data, error, isLoading, refetch } = useFetch();
 
 const router = useRouter();
+const { setNickname } = useUserStore();
 
 async function handleSubmit() {
   if (!formData.value.email || !formData.value.password) {
-    errorMessage.value = ['必填欄位不可為空'];
+    errorMessage.value = '必填欄位不可為空';
     return;
   }
 
   if (formData.value.password.length < 6) {
-    errorMessage.value = ['密碼長度不可小於 6 個字元'];
+    errorMessage.value = '密碼長度不可小於 6 個字元';
     return;
   }
 
-  await refetch(API_AUTH.SIGN_IN, 'post', formData.value);
+  await refetch(() => API_USER._SING_IN(formData.value));
 }
 
 watch(data, () => {
   if (data.value) {
     api.defaults.headers.common['Authorization'] = `Bearer ${data.value.token}`;
     localStorage.setItem('token', data.value.token);
+    setNickname(data.value.nickname);
     router.push({ name: 'home' });
   }
 });
@@ -61,7 +64,7 @@ watch(error, () => {
           <InputRequireStar />
         </h2>
         <input
-          type="text"
+          type="email"
           v-model.trim="formData.email"
           class="form-input w-full"
         />
@@ -80,12 +83,8 @@ watch(error, () => {
       <div class="mt-4 w-full text-center">
         <button type="submit" class="btn w-[50%]">登入</button>
         <div class="mt-2">
-          <p
-            v-for="(error, index) in errorMessage"
-            :key="index"
-            class="text-red-500"
-          >
-            {{ error }}
+          <p class="text-red-500">
+            {{ errorMessage }}
           </p>
         </div>
       </div>

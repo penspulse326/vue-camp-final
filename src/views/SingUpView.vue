@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { API_AUTH } from '@/api/path';
+import { API_USER } from '@/api/endpoints';
 import InputRequireStar from '@/components/InputRequireStar.vue';
 import { useFetch } from '@/composables/useFetch';
 import { ref, watch } from 'vue';
@@ -37,7 +37,7 @@ async function handleSubmit() {
     return;
   }
 
-  await refetch(API_AUTH.SIGN_UP, 'post', formData.value);
+  await refetch(() => API_USER._SIGN_UP(formData.value));
 }
 
 watch(data, () => {
@@ -65,7 +65,7 @@ watch(error, () => {
       <div class="space-y-2 w-full">
         <h2>電子郵件<InputRequireStar /></h2>
         <input
-          type="text"
+          type="email"
           v-model.trim="formData.email"
           class="form-input w-full"
         />
