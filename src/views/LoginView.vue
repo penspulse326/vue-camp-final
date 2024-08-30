@@ -1,48 +1,41 @@
 <script setup lang="ts">
+import { RouterLink, useRouter } from 'vue-router';
+import { ref, watch } from 'vue';
+import { useFetch } from '@/composables/useFetch';
+import { api } from '@/api';
 import { API_AUTH } from '@/api/path';
 import InputRequireStar from '@/components/InputRequireStar.vue';
-import { useFetch } from '@/composables/useFetch';
-import { ref, watch } from 'vue';
-import { RouterLink, useRouter } from 'vue-router';
 
 const formData = ref({
   email: '',
-  nickname: '',
   password: ''
 });
-const samePassword = ref('');
-const errorMessage = ref('');
+
+const errorMessage = ref<String[]>([]);
 
 const { data, error, isLoading, refetch } = useFetch();
+
 const router = useRouter();
 
 async function handleSubmit() {
-  if (
-    !formData.value.email ||
-    !formData.value.nickname ||
-    !formData.value.password ||
-    !samePassword.value
-  ) {
-    errorMessage.value = '必填欄位不可為空';
+  if (!formData.value.email || !formData.value.password) {
+    errorMessage.value = ['必填欄位不可為空'];
     return;
   }
 
   if (formData.value.password.length < 6) {
-    errorMessage.value = '密碼長度不可小於 6 個字元';
+    errorMessage.value = ['密碼長度不可小於 6 個字元'];
     return;
   }
 
-  if (formData.value.password !== samePassword.value) {
-    errorMessage.value = '密碼不一致';
-    return;
-  }
-
-  await refetch(API_AUTH.SIGN_UP, 'post', formData.value);
+  await refetch(API_AUTH.SIGN_IN, 'post', formData.value);
 }
 
 watch(data, () => {
   if (data.value) {
-    router.push({ name: 'login' });
+    api.defaults.headers.common['Authorization'] = `Bearer ${data.value.token}`;
+    localStorage.setItem('token', data.value.token);
+    router.push({ name: 'home' });
   }
 });
 
@@ -63,7 +56,10 @@ watch(error, () => {
       class="f-center flex-col gap-4 min-w-[280px]"
     >
       <div class="space-y-2 w-full">
-        <h2>電子郵件<InputRequireStar /></h2>
+        <h2>
+          電子郵件
+          <InputRequireStar />
+        </h2>
         <input
           type="text"
           v-model.trim="formData.email"
@@ -71,31 +67,18 @@ watch(error, () => {
         />
       </div>
       <div class="space-y-2 w-full">
-        <h2>暱稱<InputRequireStar /></h2>
-        <input
-          type="text"
-          v-model.trim="formData.nickname"
-          class="form-input w-full"
-        />
-      </div>
-      <div class="space-y-2 w-full">
-        <h2>密碼<InputRequireStar /></h2>
+        <h2>
+          密碼
+          <InputRequireStar />
+        </h2>
         <input
           type="password"
           v-model.trim="formData.password"
           class="form-input w-full"
         />
       </div>
-      <div class="space-y-2 w-full">
-        <h2>確認密碼<InputRequireStar /></h2>
-        <input
-          type="password"
-          v-model.trim="samePassword"
-          class="form-input w-full"
-        />
-      </div>
       <div class="mt-4 w-full text-center">
-        <button type="submit" class="btn w-[50%]">註冊</button>
+        <button type="submit" class="btn w-[50%]">登入</button>
         <div class="mt-2">
           <p
             v-for="(error, index) in errorMessage"
@@ -107,9 +90,9 @@ watch(error, () => {
         </div>
       </div>
     </form>
-    <RouterLink to="/login" class="mt-4 text-primary underline hover:font-bold"
-      >已經有帳號了嗎？點此登入</RouterLink
-    >
+    <RouterLink to="signup" class="mt-4 text-primary underline hover:font-bold"
+      >沒有帳號嗎？點此註冊
+    </RouterLink>
   </section>
   <LoadingAnime v-if="isLoading" />
 </template>
