@@ -3,7 +3,7 @@ import { RouterLink } from 'vue-router';
 import { ref, watch } from 'vue';
 import { useFetch } from '@/composables/useFetch';
 import { api } from '@/api';
-import { AUTH } from '@/api/path';
+import { API_AUTH } from '@/api/path';
 import InputRequireStar from '@/components/InputRequireStar.vue';
 
 const formData = ref({
@@ -11,15 +11,21 @@ const formData = ref({
   password: ''
 });
 
-const errorMessage = ref('');
+const errorMessage = ref<String[]>([]);
 
-const { data, error, isLoading, refetch } = useFetch(AUTH.SIGN_IN, 'post', formData.value);
+const { data, error, isLoading, refetch } = useFetch(API_AUTH.SIGN_IN, 'post', formData.value);
 
 async function handleSubmit() {
   if (!formData.value.email || !formData.value.password) {
-    errorMessage.value = '請輸入電子郵件和密碼';
+    errorMessage.value = ['必填欄位不可為空'];
     return;
   }
+
+  if (formData.value.password.length < 6) {
+    errorMessage.value = ['密碼長度不可小於 6 個字元'];
+    return;
+  }
+
   await refetch();
 }
 
@@ -31,7 +37,7 @@ watch(data, () => {
 
 watch(error, () => {
   if (error.value) {
-    errorMessage.value = '登入失敗，請檢查輸入資訊是否正確';
+    errorMessage.value = error.value.data.message;
   }
 });
 </script>
@@ -49,8 +55,14 @@ watch(error, () => {
         <h2>密碼<InputRequireStar /></h2>
         <input type="password" v-model.trim="formData.password" class="form-input w-full" />
       </div>
-      <button type="submit" class="btn w-full">登入</button>
-      <p v-if="errorMessage" class="text-red-500">{{ errorMessage }}</p>
+      <div class="mt-4 w-full text-center">
+        <button type="submit" class="btn w-[50%]">登入</button>
+        <div class="mt-2">
+          <p v-for="(error, index) in errorMessage" :key="index" class="text-red-500">
+            {{ error }}
+          </p>
+        </div>
+      </div>
     </form>
     <RouterLink to="signup" class="mt-8 text-primary underline hover:font-bold"
       >沒有帳號嗎？點此註冊</RouterLink
