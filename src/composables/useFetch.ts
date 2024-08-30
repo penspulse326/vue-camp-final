@@ -2,16 +2,12 @@ import { ref } from 'vue';
 import { api } from '@/api';
 import type { Method } from 'axios';
 
-export function useFetch(
-  url: string,
-  method: Method,
-  body?: any
-) {
+export function useFetch() {
   const data = ref<any>(null);
   const error = ref<any>(false);
   const isLoading = ref(false);
 
-  const fetchData = async () => {
+  const refetch = async (url: string, method: Method, body?: any) => {
     isLoading.value = true;
     error.value = null;
 
@@ -35,6 +31,6 @@ export function useFetch(
     data,
     error,
     isLoading,
-    refetch: fetchData
+    refetch
   };
 }

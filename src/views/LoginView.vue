@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { RouterLink } from 'vue-router';
+import { RouterLink, useRouter } from 'vue-router';
 import { ref, watch } from 'vue';
 import { useFetch } from '@/composables/useFetch';
 import { api } from '@/api';
@@ -13,7 +13,9 @@ const formData = ref({
 
 const errorMessage = ref<String[]>([]);
 
-const { data, error, isLoading, refetch } = useFetch(API_AUTH.SIGN_IN, 'post', formData.value);
+const { data, error, isLoading, refetch } = useFetch();
+
+const router = useRouter();
 
 async function handleSubmit() {
   if (!formData.value.email || !formData.value.password) {
@@ -26,12 +28,14 @@ async function handleSubmit() {
     return;
   }
 
-  await refetch();
+  await refetch(API_AUTH.SIGN_IN, 'post', formData.value);
 }
 
 watch(data, () => {
   if (data.value) {
     api.defaults.headers.common['Authorization'] = `Bearer ${data.value.token}`;
+    localStorage.setItem('token', data.value.token);
+    router.push({ name: 'home' });
   }
 });
 
@@ -46,27 +50,49 @@ watch(error, () => {
   <section
     class="f-center flex-col mt-4 mx-auto px-4 py-12 max-w-[420px] rounded-lg shadow-md bg-white"
   >
-    <form @submit.prevent="handleSubmit" action="#" class="f-center flex-col gap-4 min-w-[280px]">
+    <form
+      @submit.prevent="handleSubmit"
+      action="#"
+      class="f-center flex-col gap-4 min-w-[280px]"
+    >
       <div class="space-y-2 w-full">
-        <h2>電子郵件<InputRequireStar /></h2>
-        <input type="text" v-model.trim="formData.email" class="form-input w-full" />
+        <h2>
+          電子郵件
+          <InputRequireStar />
+        </h2>
+        <input
+          type="text"
+          v-model.trim="formData.email"
+          class="form-input w-full"
+        />
       </div>
       <div class="space-y-2 w-full">
-        <h2>密碼<InputRequireStar /></h2>
-        <input type="password" v-model.trim="formData.password" class="form-input w-full" />
+        <h2>
+          密碼
+          <InputRequireStar />
+        </h2>
+        <input
+          type="password"
+          v-model.trim="formData.password"
+          class="form-input w-full"
+        />
       </div>
       <div class="mt-4 w-full text-center">
         <button type="submit" class="btn w-[50%]">登入</button>
         <div class="mt-2">
-          <p v-for="(error, index) in errorMessage" :key="index" class="text-red-500">
+          <p
+            v-for="(error, index) in errorMessage"
+            :key="index"
+            class="text-red-500"
+          >
             {{ error }}
           </p>
         </div>
       </div>
     </form>
-    <RouterLink to="signup" class="mt-8 text-primary underline hover:font-bold"
-      >沒有帳號嗎？點此註冊</RouterLink
-    >
-    <LoadingAnime v-if="isLoading" />
+    <RouterLink to="signup" class="mt-4 text-primary underline hover:font-bold"
+      >沒有帳號嗎？點此註冊
+    </RouterLink>
   </section>
+  <LoadingAnime v-if="isLoading" />
 </template>
