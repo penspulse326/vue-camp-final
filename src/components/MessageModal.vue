@@ -8,7 +8,7 @@ import {
 } from '@headlessui/vue';
 
 const props = defineProps({
-    isOpen: Boolean
+  isOpen: Boolean
 });
 
 const emit = defineEmits(['close']);
@@ -47,28 +47,18 @@ function closeModal() {
             leave-to="opacity-0 scale-95"
           >
             <DialogPanel
-              class="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all"
+              class="w-full max-w-xs transform overflow-hidden rounded-2xl bg-white p-6 text-center align-middle shadow-xl transition-all"
             >
-              <DialogTitle
-                as="h3"
-                class="text-lg font-medium leading-6 text-gray-900"
-              >
-                Payment successful
-              </DialogTitle>
               <div class="mt-2">
-                <p class="text-sm text-gray-500">
-                  Your payment has been successfully submitted. We’ve sent you
-                  an email with all of the details of your order.
-                </p>
+                <p class="font-bold">輸入內容不得為空！</p>
               </div>
-
               <div class="mt-4">
                 <button
                   type="button"
-                  class="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                  class="btn hover:bg-primary/90"
                   @click="closeModal"
                 >
-                  Got it, thanks!
+                  關閉
                 </button>
               </div>
             </DialogPanel>

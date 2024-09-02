@@ -6,6 +6,10 @@ export function useFetch() {
   const isLoading = ref(false);
 
   const refetch = async (callback: () => Promise<any>) => {
+    if (!callback || isLoading.value) {
+      return;
+    }
+
     isLoading.value = true;
     error.value = null;
 

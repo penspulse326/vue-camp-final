@@ -14,33 +14,48 @@ const isModalOpened = ref(false);
 const { nickname, setTodos } = useUserStore();
 const { data, error, isLoading, refetch } = useFetch();
 
-const handleAddTodo = (todo: string) => {
-  if(!todo) {
-    isModalOpened.value = true;
-    return;
-  };
+async function handleGetTodos() {
+  await refetch(() => API_TODO._GET_ALL());
+
+  if (data.value) {
+    setTodos(data.value.data);
+  }
 }
 
-const handleCloseModal = () => {
+async function handleAddTodo(todo: string) {
+  if (!todo) {
+    isModalOpened.value = true;
+    return;
+  }
+
+  await refetch(() => API_TODO._ADD(todo));
+  handleGetTodos();
+}
+
+function handleCloseModal() {
   isModalOpened.value = false;
 }
 
 onMounted(async () => {
   await refetch(() => API_TODO._GET_ALL());
 
-  if(data.value) {
+  if (data.value) {
     setTodos(data.value.data);
   }
-})
+});
 </script>
 
 <template>
   <main class="f-center h-[100dvh] bg-gradient-to-b from-secondary to-primary">
-    <nav class="fixed top-0 flex justify-between items-center gap-4 px-4 py-2 w-full">
+    <nav
+      class="fixed top-0 flex justify-between items-center gap-4 px-4 py-2 w-full"
+    >
       <LogoLink />
       <div class="flex gap-4 text-lg text-gray-900 font-bold">
         <span>{{ nickname }}</span>
-        <RouterLink to="/login" class="underline duration-100 hover:scale-105">登出</RouterLink>
+        <RouterLink to="/login" class="underline duration-100 hover:scale-105"
+          >登出</RouterLink
+        >
       </div>
     </nav>
     <div class="container mx-auto">
@@ -52,5 +67,5 @@ onMounted(async () => {
       </div>
     </div>
   </main>
-  <MessageModal :isOpen="isModalOpened" @close="handleCloseModal"/>
+  <MessageModal :isOpen="isModalOpened" @close="handleCloseModal" />
 </template>
