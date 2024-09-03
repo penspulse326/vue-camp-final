@@ -1,14 +1,10 @@
 <template>
   <div class="f-center absolute top-0 left-0 w-full h-full bg-black/30 backdrop-blur-sm">
-    <div class="lds-hourglass"></div>
+    <div class="lds-hourglass text-white"></div>
   </div>
 </template>
 
 <style scoped>
-.lds-hourglass {
-  /* change color here */
-  color: #1c4c5b;
-}
 .lds-hourglass,
 .lds-hourglass:after {
   box-sizing: border-box;

@@ -6,11 +6,11 @@ import type { TodoItem } from '@/constants/types';
 import { useFetch } from '@/composables/useFetch';
 import { API_TODO } from '@/api/endpoints';
 
-const { data, error, isLoading, refetch } = useFetch();
-
 const props = defineProps<{
   todos: TodoItem[];
 }>();
+
+const { data, error, isLoading, refetch } = useFetch();
 
 const categories = computed(() => {
   return [
@@ -28,6 +28,10 @@ const categories = computed(() => {
 
 const emit = defineEmits(['getTodos']);
 
+async function handleToggleStatus(id: string) {
+  await refetch(() => API_TODO._TOGGLE_STATUS(id));
+}
+
 async function handleDeleteTodo(id: string) {
   await refetch(() => API_TODO._DELETE(id));
 }
@@ -41,7 +45,7 @@ watch(isLoading, () => {
 
 <template>
   <div>
-    <TabGroup>
+    <TabGroup v-if="todos.length">
       <!-- 類別 -->
       <TabList class="flex space-x-1 rounded-xl bg-primary/50 p-1">
         <Tab
@@ -81,22 +85,36 @@ watch(isLoading, () => {
               class="flex justify-between items-center border-b p-3 hover:bg-gray-100"
             >
               <div class="flex items-center gap-4">
-                <CheckBox />
+                <CheckBox
+                  :id="item.id"
+                  :isDone="item.status"
+                  @toggle-status="handleToggleStatus(item.id)"
+                />
                 <span
-                  class="inline-block max-w-[200px] md:max-w-[300px] truncate"
-                  >{{ item.content }}</span
+                  :class="[
+                    item.status && 'line-through',
+                    'inline-block max-w-[200px] md:max-w-[300px] truncate'
+                  ]"
                 >
+                  {{ item.content }}
+                </span>
               </div>
               <button type="button" @click="handleDeleteTodo(item.id)">
                 <img src="../assets/icon-delete.svg" alt="刪除待辦事項" />
               </button>
             </li>
           </ul>
-          <div class="mt-2 pt-2 px-2 border-t">
+          <div class="mt-2 py-2 text-center">
             {{ categories[1].todos.length }} 個待完成項目
           </div>
         </TabPanel>
       </TabPanels>
     </TabGroup>
+    <div
+      v-else
+      class="my-12 text-slate-900 text-center text-2xl font-bold tracking-widest"
+    >
+      目前尚無待辦事項
+    </div>
   </div>
 </template>
