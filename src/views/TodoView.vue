@@ -41,13 +41,24 @@ async function handleAddTodo(todo: string) {
     return;
   }
 
-  await refetch(() => API_TODO._ADD(todo));
-  await handleGetTodos();
+  await refetch(() => API_TODO._ADD(todo), handleGetTodos);
+}
+
+async function handleToggleStatus(id: string) {
+  await refetch(() => API_TODO._TOGGLE_STATUS(id), handleGetTodos);
+}
+
+async function handleDeleteTodo(id: string) {
+  await refetch(() => API_TODO._DELETE(id), handleGetTodos);
 }
 
 function handleCloseModal() {
   isModalOpened.value = false;
 }
+
+watch(data, () => {
+
+});
 
 onMounted(async () => {
   await handleGetTodos();
@@ -71,7 +82,11 @@ onMounted(async () => {
       <div class="m-3">
         <div class="mx-auto space-y-8 max-w-[420px]">
           <TodoInput @add-todo="handleAddTodo" />
-          <TodoContent :todos="todos" @get-todos="handleGetTodos" />
+          <TodoContent
+            :todos="todos"
+            @toggle-status="handleToggleStatus"
+            @delete-todo="handleDeleteTodo"
+          />
         </div>
       </div>
     </div>

@@ -1,16 +1,12 @@
 <script setup lang="ts">
-import { computed, watch } from 'vue';
+import { computed } from 'vue';
 import { TabGroup, TabList, Tab, TabPanels, TabPanel } from '@headlessui/vue';
 import CheckBox from './CheckBox.vue';
 import type { TodoItem } from '@/constants/types';
-import { useFetch } from '@/composables/useFetch';
-import { API_TODO } from '@/api/endpoints';
 
 const props = defineProps<{
   todos: TodoItem[];
 }>();
-
-const { data, error, isLoading, refetch } = useFetch();
 
 const categories = computed(() => {
   return [
@@ -26,21 +22,15 @@ const categories = computed(() => {
   ];
 });
 
-const emit = defineEmits(['getTodos']);
+const emit = defineEmits(['toggleStatus', 'deleteTodo']);
 
-async function handleToggleStatus(id: string) {
-  await refetch(() => API_TODO._TOGGLE_STATUS(id));
+function toggleStatus(id: string) {
+  emit('toggleStatus', id);
 }
 
-async function handleDeleteTodo(id: string) {
-  await refetch(() => API_TODO._DELETE(id));
+function deleteTodo(id: string) {
+  emit('deleteTodo', id);
 }
-
-watch(isLoading, () => {
-  if (!isLoading.value) {
-    emit('getTodos');
-  }
-});
 </script>
 
 <template>
@@ -88,7 +78,7 @@ watch(isLoading, () => {
                 <CheckBox
                   :id="item.id"
                   :isDone="item.status"
-                  @toggle-status="handleToggleStatus(item.id)"
+                  @toggle-status="toggleStatus(item.id)"
                 />
                 <span
                   :class="[
@@ -99,7 +89,7 @@ watch(isLoading, () => {
                   {{ item.content }}
                 </span>
               </div>
-              <button type="button" @click="handleDeleteTodo(item.id)">
+              <button type="button" @click="deleteTodo(item.id)">
                 <img src="../assets/icon-delete.svg" alt="刪除待辦事項" />
               </button>
             </li>

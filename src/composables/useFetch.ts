@@ -5,7 +5,7 @@ export function useFetch() {
   const error = ref<any>(null);
   const isLoading = ref(false);
 
-  const refetch = async (callback: () => Promise<any>) => {
+  const refetch = async (callback: () => Promise<any>, effects= () => {}) => {
     if (!callback || isLoading.value) {
       return;
     }
@@ -16,10 +16,14 @@ export function useFetch() {
     try {
       const response = await callback();
       data.value = response.data;
+
     } catch (err: any) {
       error.value = err.response || 'An error occurred';
+      
     } finally {
       isLoading.value = false;
+
+      effects();
     }
   };
 
