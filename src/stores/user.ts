@@ -11,6 +11,7 @@ export const useUserStore = defineStore('user', () => {
   }
 
   function setTodos(value: TodoItem[]) {
+    console.log(value);
     todos.value = value;
   }
 
@@ -19,5 +20,5 @@ export const useUserStore = defineStore('user', () => {
     todos.value = [];
   }
 
-  return { nickname, setNickname, setTodos, resetUser };
+  return { nickname, todos, setNickname, setTodos, resetUser };
 });

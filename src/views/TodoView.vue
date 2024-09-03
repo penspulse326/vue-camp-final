@@ -29,7 +29,7 @@ async function handleAddTodo(todo: string) {
   }
 
   await refetch(() => API_TODO._ADD(todo));
-  handleGetTodos();
+  await handleGetTodos();
 }
 
 function handleCloseModal() {
