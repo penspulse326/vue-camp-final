@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { computed } from 'vue';
-import { TabGroup, TabList, Tab, TabPanels, TabPanel } from '@headlessui/vue';
-import CheckBox from './CheckBox.vue';
 import type { TodoItem } from '@/constants/types';
+import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/vue';
+import { computed } from 'vue';
+import CheckBox from './CheckBox.vue';
 
 const props = defineProps<{
   todos: TodoItem[];

@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import {
-  TransitionRoot,
-  TransitionChild,
   Dialog,
   DialogPanel,
-  DialogTitle
+  TransitionChild,
+  TransitionRoot
 } from '@headlessui/vue';
 
 const props = defineProps({

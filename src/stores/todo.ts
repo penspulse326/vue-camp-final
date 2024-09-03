@@ -1,6 +1,6 @@
-import { ref } from 'vue';
-import { defineStore } from 'pinia';
 import type { TodoItem } from '@/constants/types';
+import { defineStore } from 'pinia';
+import { ref } from 'vue';
 
 export const useTodoStore = defineStore('todo-api', () => {
   // state

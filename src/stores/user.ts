@@ -1,13 +1,13 @@
-import { ref } from 'vue';
 import { defineStore } from 'pinia';
+import { ref } from 'vue';
 
 interface UserState {
   nickname: string;
 }
 
 const defaultUser: UserState = {
-  nickname: '',
-}
+  nickname: ''
+};
 
 export const useUserStore = defineStore('user', () => {
   // state

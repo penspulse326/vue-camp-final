@@ -1,8 +1,8 @@
-import { createRouter, createWebHashHistory } from 'vue-router';
-import LoginView from '../views/LoginView.vue';
+import AuthLayout from '@/components/templates/AuthLayout.vue';
 import SingUpView from '@/views/SingUpView.vue';
 import TodoView from '@/views/TodoView.vue';
-import AuthLayout from '@/components/templates/AuthLayout.vue';
+import { createRouter, createWebHashHistory } from 'vue-router';
+import LoginView from '../views/LoginView.vue';
 
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),

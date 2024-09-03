@@ -1,12 +1,12 @@
 import './assets/style.css';
 
-import { createApp } from 'vue';
 import { createPinia } from 'pinia';
+import { createApp } from 'vue';
 
 import App from './App.vue';
-import router from './router';
-import LogoLink from './components/LogoLink.vue';
 import LoadingAnime from './components/LoadingAnime.vue';
+import LogoLink from './components/LogoLink.vue';
+import router from './router';
 
 const app = createApp(App);
 

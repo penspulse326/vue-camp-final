@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import LogoLink from '@/components/LogoLink.vue';
-import TodoInput from '@/components/TodoInput.vue';
-import TodoContent from '@/components/TodoContent.vue';
-import MessageModal from '@/components/MessageModal.vue';
-import { RouterLink } from 'vue-router';
-import { useUserStore } from '@/stores/user';
-import { useFetch } from '@/composables/useFetch';
-import { onMounted, ref, watch } from 'vue';
 import { API_TODO } from '@/api/endpoints';
-import { storeToRefs } from 'pinia';
+import LogoLink from '@/components/LogoLink.vue';
+import MessageModal from '@/components/MessageModal.vue';
+import TodoContent from '@/components/TodoContent.vue';
+import TodoInput from '@/components/TodoInput.vue';
+import { useFetch } from '@/composables/useFetch';
 import { useTodoStore } from '@/stores/todo';
+import { useUserStore } from '@/stores/user';
+import { storeToRefs } from 'pinia';
+import { onMounted, ref, watch } from 'vue';
+import { RouterLink } from 'vue-router';
 
 const isModalOpened = ref(false);
 const { data, error, isLoading, refetch } = useFetch();
@@ -56,9 +56,7 @@ function handleCloseModal() {
   isModalOpened.value = false;
 }
 
-watch(data, () => {
-
-});
+watch(data, () => {});
 
 onMounted(async () => {
   await handleGetTodos();
