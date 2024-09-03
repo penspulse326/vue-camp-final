@@ -98,17 +98,13 @@ watch(error, () => {
       <div class="mt-4 w-full text-center">
         <button type="submit" class="btn w-[50%]">註冊</button>
         <div class="mt-2">
-          <p
-            v-for="(error, index) in errorMessage"
-            :key="index"
-            class="text-red-500"
-          >
-            {{ error }}
+          <p class="text-red-500">
+            {{ errorMessage }}
           </p>
         </div>
       </div>
     </form>
-    <RouterLink to="/login" class="mt-4 text-primary underline hover:font-bold"
+    <RouterLink to="/auth/login" class="mt-4 text-primary underline hover:font-bold"
       >已經有帳號了嗎？點此登入</RouterLink
     >
   </section>

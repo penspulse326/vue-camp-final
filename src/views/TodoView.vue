@@ -71,7 +71,7 @@ onMounted(async () => {
       <LogoLink />
       <div class="flex gap-4 text-lg text-gray-900 font-bold">
         <span>{{ userInfo.nickname }}</span>
-        <RouterLink to="/login" class="underline duration-100 hover:scale-105"
+        <RouterLink to="/auth/login" class="underline duration-100 hover:scale-105"
           >登出</RouterLink
         >
       </div>

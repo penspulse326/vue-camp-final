@@ -8,32 +8,27 @@ const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/login',
-      name: 'login',
+      path: '/',
+      name: 'home',
+      component: TodoView
+    },
+    {
+      path: '/auth',
+      name: '',
       component: AuthLayout,
       children: [
         {
-          path: '',
+          path: 'signup',
+          name: 'signup',
+          component: SingUpView
+        },
+        {
+          path: 'login',
+          name: 'login',
           component: LoginView
         }
       ]
     },
-    {
-      path: '/signup',
-      name: 'signup',
-      component: AuthLayout,
-      children: [
-        {
-          path: '',
-          component: SingUpView
-        }
-      ]
-    },
-    {
-      path: '/',
-      name: 'home',
-      component: TodoView
-    }
   ]
 });
 
