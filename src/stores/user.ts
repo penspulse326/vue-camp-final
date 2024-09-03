@@ -1,24 +1,26 @@
 import { ref } from 'vue';
 import { defineStore } from 'pinia';
-import type { TodoItem } from '@/constants/types';
+
+interface UserState {
+  nickname: string;
+}
+
+const defaultUser: UserState = {
+  nickname: '',
+}
 
 export const useUserStore = defineStore('user', () => {
-  const nickname = ref('');
-  const todos = ref<TodoItem[]>([]);
+  // state
+  const userInfo = ref<UserState>(defaultUser);
 
+  // action
   function setNickname(value: string) {
-    nickname.value = value;
-  }
-
-  function setTodos(value: TodoItem[]) {
-    console.log(value);
-    todos.value = value;
+    userInfo.value.nickname = value;
   }
 
   function resetUser() {
-    nickname.value = '';
-    todos.value = [];
+    userInfo.value = defaultUser;
   }
 
-  return { nickname, todos, setNickname, setTodos, resetUser };
+  return { userInfo, setNickname, resetUser };
 });

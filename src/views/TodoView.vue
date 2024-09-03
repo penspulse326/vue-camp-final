@@ -8,10 +8,24 @@ import { useUserStore } from '@/stores/user';
 import { useFetch } from '@/composables/useFetch';
 import { onMounted, ref, watch } from 'vue';
 import { API_TODO } from '@/api/endpoints';
+import { storeToRefs } from 'pinia';
+import { useTodoStore } from '@/stores/todo';
 
 const isModalOpened = ref(false);
 
-const { nickname, setTodos } = useUserStore();
+/**
+ * user store
+ */
+const userStore = useUserStore();
+const { userInfo } = storeToRefs(userStore);
+
+/**
+ * todos store
+ */
+const todoStore = useTodoStore();
+const { todos } = storeToRefs(todoStore);
+const { setTodos } = todoStore;
+
 const { data, error, isLoading, refetch } = useFetch();
 
 async function handleGetTodos() {
@@ -37,11 +51,7 @@ function handleCloseModal() {
 }
 
 onMounted(async () => {
-  await refetch(() => API_TODO._GET_ALL());
-
-  if (data.value) {
-    setTodos(data.value.data);
-  }
+  await handleGetTodos();
 });
 </script>
 
@@ -52,7 +62,7 @@ onMounted(async () => {
     >
       <LogoLink />
       <div class="flex gap-4 text-lg text-gray-900 font-bold">
-        <span>{{ nickname }}</span>
+        <span>{{ userInfo.nickname }}</span>
         <RouterLink to="/login" class="underline duration-100 hover:scale-105"
           >登出</RouterLink
         >
@@ -62,7 +72,7 @@ onMounted(async () => {
       <div class="m-3">
         <div class="mx-auto space-y-8 max-w-[420px]">
           <TodoInput @add-todo="handleAddTodo" />
-          <TodoContent />
+          <TodoContent :todos="todos" />
         </div>
       </div>
     </div>

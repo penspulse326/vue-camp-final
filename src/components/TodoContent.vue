@@ -2,21 +2,22 @@
 import { computed } from 'vue';
 import { TabGroup, TabList, Tab, TabPanels, TabPanel } from '@headlessui/vue';
 import CheckBox from './CheckBox.vue';
-import { useUserStore } from '@/stores/user';
 import type { TodoItem } from '@/constants/types';
 
-const user = useUserStore();
+const props = defineProps<{
+  todos: TodoItem[];
+}>();
 
 const categories = computed(() => {
   return [
-    { name: '全部', todos: user.todos },
+    { name: '全部', todos: props.todos },
     {
       name: '待完成',
-      todos: user.todos.filter((todo: TodoItem) => !todo.status)
+      todos: props.todos.filter((todo: TodoItem) => !todo.status)
     },
     {
       name: '已完成',
-      todos: user.todos.filter((todo: TodoItem) => todo.status)
+      todos: props.todos.filter((todo: TodoItem) => todo.status)
     }
   ];
 });
@@ -25,6 +26,7 @@ const categories = computed(() => {
 <template>
   <div>
     <TabGroup>
+      <!-- 類別選單 -->
       <TabList class="flex space-x-1 rounded-xl bg-primary/50 p-1">
         <Tab
           v-for="category in categories"
@@ -46,6 +48,7 @@ const categories = computed(() => {
         </Tab>
       </TabList>
 
+      <!-- 待辦事項列表 -->
       <TabPanels class="mt-2">
         <TabPanel
           v-for="category in categories"
