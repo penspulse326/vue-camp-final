@@ -16,6 +16,7 @@ function addTodo() {
     <input
       type="text"
       v-model="todoContent"
+      @keyup.enter="addTodo"
       placeholder="請輸入待辦事項"
       class="flex-grow px-2 outline-none"
     />

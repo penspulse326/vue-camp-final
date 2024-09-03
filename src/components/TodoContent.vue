@@ -1,8 +1,12 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, watch } from 'vue';
 import { TabGroup, TabList, Tab, TabPanels, TabPanel } from '@headlessui/vue';
 import CheckBox from './CheckBox.vue';
 import type { TodoItem } from '@/constants/types';
+import { useFetch } from '@/composables/useFetch';
+import { API_TODO } from '@/api/endpoints';
+
+const { data, error, isLoading, refetch } = useFetch();
 
 const props = defineProps<{
   todos: TodoItem[];
@@ -21,12 +25,24 @@ const categories = computed(() => {
     }
   ];
 });
+
+const emit = defineEmits(['getTodos']);
+
+async function handleDeleteTodo(id: string) {
+  await refetch(() => API_TODO._DELETE(id));
+}
+
+watch(isLoading, () => {
+  if (!isLoading.value) {
+    emit('getTodos');
+  }
+});
 </script>
 
 <template>
   <div>
     <TabGroup>
-      <!-- 類別選單 -->
+      <!-- 類別 -->
       <TabList class="flex space-x-1 rounded-xl bg-primary/50 p-1">
         <Tab
           v-for="category in categories"
@@ -58,11 +74,11 @@ const categories = computed(() => {
             'ring-white/60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2'
           ]"
         >
-          <ul>
+          <ul class="pr-1 max-h-[400px] overflow-y-scroll">
             <li
               v-for="item in category.todos"
               :key="item.id"
-              class="flex justify-between items-center rounded-md p-3 hover:bg-gray-100"
+              class="flex justify-between items-center border-b p-3 hover:bg-gray-100"
             >
               <div class="flex items-center gap-4">
                 <CheckBox />
@@ -71,7 +87,7 @@ const categories = computed(() => {
                   >{{ item.content }}</span
                 >
               </div>
-              <button type="button">
+              <button type="button" @click="handleDeleteTodo(item.id)">
                 <img src="../assets/icon-delete.svg" alt="刪除待辦事項" />
               </button>
             </li>

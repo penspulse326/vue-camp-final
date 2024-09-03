@@ -12,6 +12,7 @@ import { storeToRefs } from 'pinia';
 import { useTodoStore } from '@/stores/todo';
 
 const isModalOpened = ref(false);
+const { data, error, isLoading, refetch } = useFetch();
 
 /**
  * user store
@@ -25,8 +26,6 @@ const { userInfo } = storeToRefs(userStore);
 const todoStore = useTodoStore();
 const { todos } = storeToRefs(todoStore);
 const { setTodos } = todoStore;
-
-const { data, error, isLoading, refetch } = useFetch();
 
 async function handleGetTodos() {
   await refetch(() => API_TODO._GET_ALL());
@@ -72,10 +71,11 @@ onMounted(async () => {
       <div class="m-3">
         <div class="mx-auto space-y-8 max-w-[420px]">
           <TodoInput @add-todo="handleAddTodo" />
-          <TodoContent :todos="todos" />
+          <TodoContent :todos="todos" @get-todos="handleGetTodos" />
         </div>
       </div>
     </div>
   </main>
   <MessageModal :isOpen="isModalOpened" @close="handleCloseModal" />
+  <LoadingAnime v-if="isLoading" />
 </template>
