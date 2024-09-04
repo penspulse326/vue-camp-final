@@ -104,7 +104,9 @@ watch(error, () => {
         </div>
       </div>
     </form>
-    <RouterLink to="/auth/login" class="mt-4 text-primary underline hover:font-bold"
+    <RouterLink
+      to="/auth/login"
+      class="mt-4 text-primary underline hover:font-bold"
       >已經有帳號了嗎？點此登入</RouterLink
     >
   </section>

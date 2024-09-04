@@ -90,7 +90,9 @@ watch(error, () => {
         </div>
       </div>
     </form>
-    <RouterLink to="/auth/signup" class="mt-4 text-primary underline hover:font-bold"
+    <RouterLink
+      to="/auth/signup"
+      class="mt-4 text-primary underline hover:font-bold"
       >沒有帳號嗎？點此註冊
     </RouterLink>
   </section>

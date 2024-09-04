@@ -19,7 +19,13 @@ function closeModal() {
 
 <template>
   <TransitionRoot appear :show="props.isOpen" as="template">
-    <Dialog as="div" @close="closeModal" class="relative z-10">
+    <Dialog
+      as="div"
+      tabindex="-1"
+      autofocus
+      @close="closeModal"
+      class="relative z-10"
+    >
       <TransitionChild
         as="template"
         enter="duration-300 ease-out"
@@ -31,7 +37,6 @@ function closeModal() {
       >
         <div class="fixed inset-0 bg-black/25" />
       </TransitionChild>
-
       <div class="fixed inset-0 overflow-y-auto">
         <div
           class="flex min-h-full items-center justify-center p-4 text-center"

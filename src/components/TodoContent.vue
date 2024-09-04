@@ -65,10 +65,10 @@ function deleteTodo(id: string) {
           :key="category.name"
           :class="[
             'rounded-xl bg-white p-3',
-            'ring-white/60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2'
+            'ring-white/60 ring-offset-2 ring-offset-primary focus:outline-none focus:ring-2'
           ]"
         >
-          <ul class="pr-1 max-h-[400px] overflow-y-scroll">
+          <ul class="todo__list pr-1 max-h-[400px] overflow-y-scroll">
             <li
               v-for="item in category.todos"
               :key="item.id"
@@ -108,3 +108,16 @@ function deleteTodo(id: string) {
     </div>
   </div>
 </template>
+
+<style scoped>
+.todo__list::-webkit-scrollbar {
+  width: 4px;
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.todo__list::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: #1a5e63;
+}
+</style>
