@@ -9,7 +9,7 @@ import { RouterLink, useRouter } from 'vue-router';
 const formData = ref<SignupForm>({
   email: '',
   nickname: '',
-  password: ''
+  password: '',
 });
 const samePassword = ref('');
 const errorMessage = ref('');
@@ -59,39 +59,39 @@ watch(error, () => {
     class="f-center flex-col mt-4 mx-auto px-4 py-12 max-w-[420px] rounded-lg shadow-md bg-white"
   >
     <form
-      @submit.prevent="handleSubmit"
       action="#"
       class="f-center flex-col gap-4 min-w-[280px]"
+      @submit.prevent="handleSubmit"
     >
       <div class="space-y-2 w-full">
         <h2>電子郵件<InputRequireStar /></h2>
         <input
-          type="email"
           v-model.trim="formData.email"
+          type="email"
           class="form-input w-full"
         />
       </div>
       <div class="space-y-2 w-full">
         <h2>暱稱<InputRequireStar /></h2>
         <input
-          type="text"
           v-model.trim="formData.nickname"
+          type="text"
           class="form-input w-full"
         />
       </div>
       <div class="space-y-2 w-full">
         <h2>密碼<InputRequireStar /></h2>
         <input
-          type="password"
           v-model.trim="formData.password"
+          type="password"
           class="form-input w-full"
         />
       </div>
       <div class="space-y-2 w-full">
         <h2>確認密碼<InputRequireStar /></h2>
         <input
-          type="password"
           v-model.trim="samePassword"
+          type="password"
           class="form-input w-full"
         />
       </div>
@@ -107,8 +107,9 @@ watch(error, () => {
     <RouterLink
       to="/auth/login"
       class="mt-4 text-primary underline hover:font-bold"
-      >已經有帳號了嗎？點此登入</RouterLink
     >
+      已經有帳號了嗎？點此登入
+    </RouterLink>
   </section>
   <LoadingAnime v-if="isLoading" />
 </template>

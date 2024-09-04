@@ -10,7 +10,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: TodoView
+      component: TodoView,
     },
     {
       path: '/auth',
@@ -20,16 +20,16 @@ const router = createRouter({
         {
           path: 'signup',
           name: 'signup',
-          component: SingUpView
+          component: SingUpView,
         },
         {
           path: 'login',
           name: 'login',
-          component: LoginView
-        }
-      ]
-    }
-  ]
+          component: LoginView,
+        },
+      ],
+    },
+  ],
 });
 
 export default router;

@@ -2,7 +2,7 @@
   <div
     class="f-center absolute top-0 left-0 w-full h-full bg-black/30 backdrop-blur-sm"
   >
-    <div class="lds-hourglass text-white"></div>
+    <div class="lds-hourglass text-white" />
   </div>
 </template>
 

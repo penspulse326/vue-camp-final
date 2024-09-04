@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { storeToRefs } from 'pinia';
+import { onMounted, ref, watch } from 'vue';
+import { RouterLink } from 'vue-router';
 import { API_TODO } from '@/api/endpoints';
 import LogoLink from '@/components/LogoLink.vue';
 import MessageModal from '@/components/MessageModal.vue';
@@ -7,11 +10,9 @@ import TodoInput from '@/components/TodoInput.vue';
 import { useFetch } from '@/composables/useFetch';
 import { useTodoStore } from '@/stores/todo';
 import { useUserStore } from '@/stores/user';
-import { storeToRefs } from 'pinia';
-import { onMounted, ref, watch } from 'vue';
-import { RouterLink } from 'vue-router';
 
 const isModalOpened = ref(false);
+const message = ref('');
 const { data, error, isLoading, refetch } = useFetch();
 
 /**
@@ -56,7 +57,10 @@ function handleCloseModal() {
   isModalOpened.value = false;
 }
 
-watch(data, () => {});
+watch(error, () => {
+  message.value = '發生錯誤，請稍後再試！';
+  isModalOpened.value = true;
+});
 
 onMounted(async () => {
   await handleGetTodos();
@@ -74,8 +78,9 @@ onMounted(async () => {
         <RouterLink
           to="/auth/login"
           class="underline duration-100 hover:scale-105"
-          >登出</RouterLink
         >
+          登出
+        </RouterLink>
       </div>
     </nav>
     <div class="container mx-auto">
@@ -91,6 +96,10 @@ onMounted(async () => {
       </div>
     </div>
   </main>
-  <MessageModal :isOpen="isModalOpened" @close="handleCloseModal" />
+  <MessageModal
+    :is-open="isModalOpened"
+    :message="message"
+    @close="handleCloseModal"
+  />
   <LoadingAnime v-if="isLoading" />
 </template>

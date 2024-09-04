@@ -10,7 +10,7 @@ export const API_USER = {
 
   _SIGN_OUT: () => api.post('/users/sign_out'),
 
-  _CHECK_AUTH: () => api.get('/users/checkout')
+  _CHECK_AUTH: () => api.get('/users/checkout'),
 };
 
 export const API_TODO = {
@@ -23,5 +23,5 @@ export const API_TODO = {
   _UPDATE_CONTENT: (id: string, content: string) =>
     api.put(`/todos/${id}`, { content }),
 
-  _DELETE: (id: string) => api.delete(`/todos/${id}`)
+  _DELETE: (id: string) => api.delete(`/todos/${id}`),
 };

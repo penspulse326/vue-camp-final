@@ -6,7 +6,7 @@ interface UserState {
 }
 
 const defaultUser: UserState = {
-  nickname: ''
+  nickname: '',
 };
 
 export const useUserStore = defineStore('user', () => {

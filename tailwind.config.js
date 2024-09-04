@@ -7,9 +7,9 @@ export default {
         primary: '#1A5E63',
         secondary: '#83D6D2',
         warning: '#F0F3BD',
-        alert: '#ED6A5A'
-      }
-    }
+        alert: '#ED6A5A',
+      },
+    },
   },
-  plugins: []
-};
+  plugins: [],
+}

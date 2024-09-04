@@ -3,12 +3,13 @@ import {
   Dialog,
   DialogPanel,
   TransitionChild,
-  TransitionRoot
+  TransitionRoot,
 } from '@headlessui/vue';
 
-const props = defineProps({
-  isOpen: Boolean
-});
+const props = defineProps<{
+  isOpen: boolean;
+  message: string;
+}>();
 
 const emit = defineEmits(['close']);
 
@@ -23,8 +24,8 @@ function closeModal() {
       as="div"
       tabindex="-1"
       autofocus
-      @close="closeModal"
       class="relative z-10"
+      @close="closeModal"
     >
       <TransitionChild
         as="template"

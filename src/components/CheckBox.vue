@@ -16,11 +16,11 @@ function handleToggleStatus() {
     class="f-center w-6 h-6 border rounded-md cursor-pointer duration-100 hover:bg-primary/25"
   >
     <input
-      type="checkbox"
-      @change="handleToggleStatus"
-      name=""
       id=""
+      type="checkbox"
+      name=""
       class="hidden"
+      @change="handleToggleStatus"
     />
     <img v-if="props.isDone" src="../assets/icon-check.svg" alt="勾勾" />
   </label>

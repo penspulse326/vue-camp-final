@@ -10,7 +10,7 @@ import { RouterLink, useRouter } from 'vue-router';
 
 const formData = ref<LoginForm>({
   email: '',
-  password: ''
+  password: '',
 });
 
 const errorMessage = ref('');
@@ -36,7 +36,7 @@ async function handleSubmit() {
 
 watch(data, () => {
   if (data.value) {
-    api.defaults.headers.common['Authorization'] = data.value.token;
+    api.defaults.headers.common.Authorization = data.value.token;
     localStorage.setItem('token', data.value.token);
     setNickname(data.value.nickname);
     router.push({ name: 'home' });
@@ -55,9 +55,9 @@ watch(error, () => {
     class="f-center flex-col mt-4 mx-auto px-4 py-12 max-w-[420px] rounded-lg shadow-md bg-white"
   >
     <form
-      @submit.prevent="handleSubmit"
       action="#"
       class="f-center flex-col gap-4 min-w-[280px]"
+      @submit.prevent="handleSubmit"
     >
       <div class="space-y-2 w-full">
         <h2>
@@ -65,8 +65,8 @@ watch(error, () => {
           <InputRequireStar />
         </h2>
         <input
-          type="email"
           v-model.trim="formData.email"
+          type="email"
           class="form-input w-full"
         />
       </div>
@@ -76,8 +76,8 @@ watch(error, () => {
           <InputRequireStar />
         </h2>
         <input
-          type="password"
           v-model.trim="formData.password"
+          type="password"
           class="form-input w-full"
         />
       </div>
@@ -93,7 +93,8 @@ watch(error, () => {
     <RouterLink
       to="/auth/signup"
       class="mt-4 text-primary underline hover:font-bold"
-      >沒有帳號嗎？點此註冊
+    >
+      沒有帳號嗎？點此註冊
     </RouterLink>
   </section>
   <LoadingAnime v-if="isLoading" />

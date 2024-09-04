@@ -4,7 +4,7 @@ import { RouterLink } from 'vue-router';
 
 <template>
   <h1 class="flex w-[242px] md:w-[312px] h-9 md:h-12">
-    <RouterLink to="/" class="w-full"></RouterLink>
+    <RouterLink to="/" class="w-full" />
   </h1>
 </template>
 

@@ -1,28 +1,28 @@
 <script setup lang="ts">
-import type { TodoItem } from '@/constants/types';
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/vue';
 import { computed } from 'vue';
 import CheckBox from './CheckBox.vue';
+import type { TodoItem } from '@/constants/types';
 
 const props = defineProps<{
   todos: TodoItem[];
 }>();
+
+const emit = defineEmits(['toggleStatus', 'deleteTodo']);
 
 const categories = computed(() => {
   return [
     { name: '全部', todos: props.todos },
     {
       name: '待完成',
-      todos: props.todos.filter((todo: TodoItem) => !todo.status)
+      todos: props.todos.filter((todo: TodoItem) => !todo.status),
     },
     {
       name: '已完成',
-      todos: props.todos.filter((todo: TodoItem) => todo.status)
-    }
+      todos: props.todos.filter((todo: TodoItem) => todo.status),
+    },
   ];
 });
-
-const emit = defineEmits(['toggleStatus', 'deleteTodo']);
 
 function toggleStatus(id: string) {
   emit('toggleStatus', id);
@@ -40,17 +40,16 @@ function deleteTodo(id: string) {
       <TabList class="flex space-x-1 rounded-xl bg-primary/50 p-1">
         <Tab
           v-for="category in categories"
-          as="template"
           :key="category.name"
           v-slot="{ selected }"
+          as="template"
         >
           <button
+            class="w-full rounded-lg py-2.5 text-sm font-medium leading-5 ring-white/60 ring-offset-2 ring-offset-primary focus:outline-none focus:ring-2"
             :class="[
-              'w-full rounded-lg py-2.5 text-sm font-medium leading-5',
-              'ring-white/60 ring-offset-2 ring-offset-primary focus:outline-none focus:ring-2',
               selected
                 ? 'bg-white text-primary shadow'
-                : 'text-blue-100 hover:bg-white/[0.12] hover:text-white'
+                : 'text-blue-100 hover:bg-white/[0.12] hover:text-white',
             ]"
           >
             {{ category.name }}
@@ -63,10 +62,7 @@ function deleteTodo(id: string) {
         <TabPanel
           v-for="category in categories"
           :key="category.name"
-          :class="[
-            'rounded-xl bg-white p-3',
-            'ring-white/60 ring-offset-2 ring-offset-primary focus:outline-none focus:ring-2'
-          ]"
+          class="rounded-xl bg-white p-3 ring-white/60 ring-offset-2 ring-offset-primary focus:outline-none focus:ring-2"
         >
           <ul class="todo__list pr-1 max-h-[400px] overflow-y-scroll">
             <li
@@ -77,14 +73,12 @@ function deleteTodo(id: string) {
               <div class="flex items-center gap-4">
                 <CheckBox
                   :id="item.id"
-                  :isDone="item.status"
+                  :is-done="item.status"
                   @toggle-status="toggleStatus(item.id)"
                 />
                 <span
-                  :class="[
-                    item.status && 'line-through',
-                    'inline-block max-w-[200px] md:max-w-[300px] truncate'
-                  ]"
+                  class="inline-block max-w-[200px] md:max-w-[300px] truncate"
+                  :class="[item.status && 'line-through']"
                 >
                   {{ item.content }}
                 </span>
