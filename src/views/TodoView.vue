@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
-import { onMounted, ref, watch } from 'vue';
-import { RouterLink } from 'vue-router';
+import { onBeforeMount, onMounted, ref, watch } from 'vue';
+import { RouterLink, useRouter } from 'vue-router';
 import { API_TODO } from '@/api/endpoints';
 import LogoLink from '@/components/LogoLink.vue';
 import MessageModal from '@/components/MessageModal.vue';
@@ -10,10 +10,13 @@ import TodoInput from '@/components/TodoInput.vue';
 import { useFetch } from '@/composables/useFetch';
 import { useTodoStore } from '@/stores/todo';
 import { useUserStore } from '@/stores/user';
+import { api } from '@/api';
+
+const router = useRouter();
+const { data, error, isLoading, refetch } = useFetch();
 
 const isModalOpened = ref(false);
 const message = ref('');
-const { data, error, isLoading, refetch } = useFetch();
 
 /**
  * user store
@@ -39,6 +42,7 @@ async function handleGetTodos() {
 async function handleAddTodo(todo: string) {
   if (!todo) {
     isModalOpened.value = true;
+    message.value = '代辦事項不能空白 QAQ';
     return;
   }
 
@@ -56,13 +60,17 @@ async function handleDeleteTodo(id: string) {
 function handleCloseModal() {
   isModalOpened.value = false;
 }
-
 watch(error, () => {
-  message.value = '發生錯誤，請稍後再試！';
+  message.value = '發生錯誤，請稍後再試 QAQ';
   isModalOpened.value = true;
 });
 
-onMounted(async () => {
+onBeforeMount(async () => {
+  if (!api.defaults.headers.common.Authorization) {
+    router.push({ name: 'login' });
+    return;
+  }
+
   await handleGetTodos();
 });
 </script>

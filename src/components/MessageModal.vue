@@ -55,7 +55,9 @@ function closeModal() {
               class="w-full max-w-xs transform overflow-hidden rounded-2xl bg-white p-6 text-center align-middle shadow-xl transition-all"
             >
               <div class="mt-2">
-                <p class="font-bold">輸入內容不得為空！</p>
+                <p class="font-bold">
+                  {{ props.message }}
+                </p>
               </div>
               <div class="mt-4">
                 <button
